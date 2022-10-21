@@ -1,0 +1,14 @@
+[package]
+name = "log4rs-date-appender"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0"
+chrono = "0.4"
+fake = "2.5"
+log = "0.4"
+log4rs = "1.2"
+parking_lot = "0.12"
