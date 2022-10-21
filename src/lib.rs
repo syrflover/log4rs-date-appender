@@ -26,7 +26,7 @@ pub trait CurrentDate: Debug + Send + Sync {
     }
 }
 
-const TAB: &str = "    ";
+// const TAB: &str = "    ";
 
 fn encoder() -> Box<impl Encode> {
     // `[2021-08-27 21:56:44 +09:00] - [INFO] Message`
@@ -35,7 +35,7 @@ fn encoder() -> Box<impl Encode> {
     // [2021-08-30 19:09:42 +09:00] - [INFO] MODULE = df_user::adapter::controller::websocket, PID = 53280, THREAD = tokio-runtime-worker-123145352740864
     //     started WebSocketServer
     let encoder = PatternEncoder::new(
-        &"[{date(%Y-%m-%d %H:%M:%S %Z)}] - [{level}] MODULE = {module}, PID = {pid}, THREAD = {thread}-{I}{n}{tab}{message}{n}".replace("{tab}", TAB),
+        "[{date(%Y-%m-%d %H:%M:%S %Z)}] - [{level}] MODULE = {module}, PID = {pid}, THREAD = {thread}-{I}{n}{message}{n}", // .replace("{tab}", TAB),
     );
     Box::new(encoder)
 }
@@ -159,7 +159,7 @@ mod tests {
     use chrono::{NaiveDateTime, Utc};
     use fake::Fake;
 
-    use super::{config, CurrentDate, TAB};
+    use super::{config, CurrentDate};
 
     static mut ADD: i64 = 0;
 
@@ -228,7 +228,7 @@ mod tests {
             // 로그 한 번에 두 줄을 사용하기 때문에
             if i + 1 == 0 {
                 // 1,2,3 비교
-                assert!(log.contains(&format!("{}{}.", TAB, i + 1)));
+                assert!(log.contains(&format!("{}.", i + 1)));
             }
         }
 
@@ -236,7 +236,7 @@ mod tests {
             // 로그 한 번에 두 줄을 사용하기 때문에
             if i + 1 == 0 {
                 // 4,5,6 비교
-                assert!(log.contains(&format!("{}{}.", TAB, i + 4)));
+                assert!(log.contains(&format!("{}.", i + 4)));
             }
         }
     }
